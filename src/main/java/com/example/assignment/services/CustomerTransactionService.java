@@ -69,7 +69,8 @@ public class CustomerTransactionService {
 	 }
 	 
 	 public String deleteTransaction(Long transactionId) {
-	        transactionRepository.deleteById(transactionId);
+		   transactionRepository.deleteByTransactionId(transactionId);
+		 	rewardPointService.deleteByTransactionId(transactionId);
 	        return "Transaction deleted successfully";
 	    }
 	 
@@ -77,8 +78,6 @@ public class CustomerTransactionService {
 	public String updateTransaction(DTO dto) {
 		try {
 			transactionRepository.updateTransaction(dto.getTransAmount(),dto.getTransSpentDetails(),dto.getTransDate(),dto.getCustomerId(),dto.getTransactionId());
-		}
-		catch(Exception e) {
 			try {
 				LocalDate toSetDate;
 				int points = rewardPointService.calculateRewardPoints(dto.getTransAmount());
@@ -90,10 +89,9 @@ public class CustomerTransactionService {
 					rewardpointrepo.updateRewards(null,null,points,dto.getCustomerId(),dto.getTransactionId());
 				}
 			}
-			catch(Exception ex) {
-				System.out.println(ex.getMessage());
-			}
+			catch(Exception ex) {}
 		}
+		catch(Exception e) {}
 
 		return "updated";
 		

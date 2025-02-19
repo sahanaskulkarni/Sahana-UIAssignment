@@ -84,7 +84,7 @@ public class CustomerTransactionServiceTest {
 	@Test
 	public void testupdateTransaction() {
 		List<CustomerTransaction> lst = new ArrayList<>();
-		when(transactionRepository.updateTransaction(0, null, null, null, null)).thenReturn(lst);
+		when(transactionRepository.updateTransaction(0, null, null, null, null)).thenReturn(0);
 		DTO dto = new DTO();
 		assertEquals(customerTransactionService.updateTransaction(dto),"updated");
 	}

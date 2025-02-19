@@ -148,6 +148,11 @@ public class RewardPointsService {
 		}
 	    return false;
 	}
+
+
+	public void deleteByTransactionId(Long transactionId) {
+		rewardPointRepository.deleteByTrans(transactionId);
+	}
 	
 	
 }
