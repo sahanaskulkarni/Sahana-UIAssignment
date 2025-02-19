@@ -84,17 +84,17 @@ public class CustomerController {
         }
 	}
 	
-	
-	@GetMapping("/home")
-    public String home() {
-		return "home";
-	}
-    
-    @GetMapping("/test")
-    public String test() {
-		return "test";
-	}
-    
+//	
+//	@GetMapping("/home")
+//    public String home() {
+//		return "home";
+//	}
+//    
+//    @GetMapping("/test")
+//    public String test() {
+//		return "test";
+//	}
+//    
     
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {

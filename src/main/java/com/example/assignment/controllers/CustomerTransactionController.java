@@ -3,6 +3,8 @@ package com.example.assignment.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,27 +26,29 @@ public class CustomerTransactionController {
 	   
 
 		@GetMapping("/getByCustomer")
-	    public List<CustomerTransaction> getTransactions(@RequestBody DTO dto) {
-	        return transactionService.getTransactionsByCustomer(dto.getCustomerId());
+	    public ResponseEntity<List<CustomerTransaction>> getTransactions(@RequestBody DTO dto) {
+			List<CustomerTransaction> lstCustomerTransactions = transactionService.getTransactionsByCustomer(dto.getCustomerId());
+	        return new ResponseEntity<List<CustomerTransaction>> (lstCustomerTransactions,HttpStatus.OK);
 	    }
 
 
 		@PostMapping("/add")
-	    public DTO addTransaction(@RequestBody DTO dto) {
-	        return transactionService.addTransaction(dto);
+	    public ResponseEntity<DTO> addTransaction(@RequestBody DTO dto) {
+			DTO resultDto = transactionService.addTransaction(dto);
+	        return new ResponseEntity<DTO>(resultDto,HttpStatus.OK);
 	    }
-		
+	
 
 		 @DeleteMapping("/delete")
-		   public String deleteTransaction(@RequestBody DTO dto) {
+		   public ResponseEntity<String> deleteTransaction(@RequestBody DTO dto) {
 		        transactionService.deleteTransaction(dto.getTransactionId());
-		        return "Transaction deleted successfully";
+		        return new ResponseEntity<String>("Transaction deleted successfully",HttpStatus.OK);
 		   }
 		 
 		 @PutMapping("/update")
-		 public String updateTransaction(@RequestBody DTO dto) {
+		 public ResponseEntity<String> updateTransaction(@RequestBody DTO dto) {
 			 transactionService.updateTransaction(dto);
-			 return "updated";
+			 return new ResponseEntity<String>("updated",HttpStatus.OK);
 		 }
 	 
 }

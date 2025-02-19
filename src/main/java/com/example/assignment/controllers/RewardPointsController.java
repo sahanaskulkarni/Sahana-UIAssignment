@@ -3,6 +3,8 @@ package com.example.assignment.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,9 @@ public class RewardPointsController {
 	
 	//get total reward points
 	@GetMapping("/totalpoints")
-    public int getRewardPointsByCustomer(@RequestBody DTO dto) {
-        return rewardpointsservice.getTotalPointsByCustomer(dto.getCustomerId());
+    public ResponseEntity<Integer> getRewardPointsByCustomer(@RequestBody DTO dto) {
+		int totalPoints = rewardpointsservice.getTotalPointsByCustomer(dto.getCustomerId());
+        return new ResponseEntity<Integer>(totalPoints,HttpStatus.OK);
     }
 	
 	//points for a month
@@ -35,15 +38,17 @@ public class RewardPointsController {
 //	}
 	
 	@GetMapping("/detailedRewards")
-	public List<YearDTO> getMonthlyPointsByCustomer(@RequestBody DTO dto) {
-          return rewardpointsservice.getMonthly(dto.getCustomerId());
+	public ResponseEntity<List<YearDTO>> getMonthlyPointsByCustomer(@RequestBody DTO dto) {
+		List<YearDTO> result = rewardpointsservice.getMonthly(dto.getCustomerId());
+          return new ResponseEntity<List<YearDTO>>(result,HttpStatus.OK);
     }
 
 	
 	//get all
 	@GetMapping("/allRewards")
-    public List<RewardPoint> getAllRewardPoints() {
-        return rewardpointsservice.getAllPoints();
+    public ResponseEntity<List<RewardPoint>> getAllRewardPoints() {
+		List<RewardPoint> resultList = rewardpointsservice.getAllPoints();
+        return new ResponseEntity<List<RewardPoint>>(resultList,HttpStatus.OK);
     }
 	
 }

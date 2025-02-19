@@ -22,16 +22,15 @@ public class SecurityConfig {
 		 	.csrf(customizer->customizer.disable())
 		 	
 		 	.authorizeHttpRequests(authz -> authz
-		            .requestMatchers("/customer/register","/customer/login","/customer/logout").permitAll()
-		            .requestMatchers("/customer/home","/transactions/add","/transactions/delete","/transactions/update").hasAuthority("ADMIN")  
-		            .requestMatchers("/customer/test","/transactions/getByCustomer","/rewardpoints/totalpoints",
+		            .requestMatchers("/swagger-ui/**","/v3/api-docs/**", "/swagger-resources/**", "/webjars/**",
+		            				"/customer/register","/customer/login","/customer/logout").permitAll()
+		            .requestMatchers("/transactions/add","/transactions/delete","/transactions/update").hasAuthority("ADMIN")  
+		            .requestMatchers("/transactions/getByCustomer","/rewardpoints/totalpoints",
 		            		"/rewardpoints/detailedRewards","/rewardpoints/allRewards").hasAuthority("USER")
 		            .anyRequest().authenticated()
 		        )
 		     .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 		 
-            
-        
          return http.build();
         
     }
