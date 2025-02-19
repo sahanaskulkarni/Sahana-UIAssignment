@@ -45,7 +45,7 @@ public class CustomerTransactionService {
 		 CustomerTransaction saved = transactionRepository.save(transaction);
 		 
 		 //for reward points
-		 int points = rewardPointService.calculateRewardPoints(transaction.getAmount());
+		 Integer points = rewardPointService.calculateRewardPoints(transaction.getAmount());
 		 RewardPoint rewards = new RewardPoint();
 		 LocalDate toSetDate = LocalDate.parse(transaction.getDate());
 		 rewards.setMonth(toSetDate.getMonthValue());
@@ -72,6 +72,7 @@ public class CustomerTransactionService {
 	        transactionRepository.deleteById(transactionId);
 	        return "Transaction deleted successfully";
 	    }
+	 
 
 	public String updateTransaction(DTO dto) {
 		try {

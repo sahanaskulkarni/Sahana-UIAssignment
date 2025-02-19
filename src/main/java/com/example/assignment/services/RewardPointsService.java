@@ -25,6 +25,7 @@ public class RewardPointsService {
        return rewardPointRepository.findAll();
    }
 	
+	
 	public int getTotalPointsByCustomer(Long customerId) {
 		List<RewardPoint> lstcustomers =  rewardPointRepository.findByCustomerId(customerId);
 		int totalRewardsOfCustomer=0;
@@ -51,7 +52,7 @@ public class RewardPointsService {
    }
 
 	public int getMonthlyPoints(Long customerId, int month, int year) {
-		
+	
 		LocalDate startDate = LocalDate.of(year,month, 1);
        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
      
@@ -63,7 +64,7 @@ public class RewardPointsService {
        
 		return totalPoints;
 	}
-
+	
 	
 	public List<YearDTO> getMonthly(Long customerId) {
 		List<RewardPoint> lstByCustId = rewardPointRepository.getMonthlyByCustId(customerId);

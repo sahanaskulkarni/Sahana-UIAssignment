@@ -1,8 +1,13 @@
 package com.example.assignment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,18 +58,36 @@ public class CustomerTransactionServiceTest {
 	
 	
 	@Test
-    public void testaddTransaction() {
-//		 Optional<Customer> customer = Optional.of(new  Customer());
-//		 when(customerRepository.findById(Mockito.any())).thenReturn(customer);
-//		 CustomerTransaction transaction = new CustomerTransaction();
-//		 when(transactionRepository.save(Mockito.any())).thenReturn(transaction);
-//		 when(rewardPointService.getTotalPointsByCustomer(Mockito.any())).thenReturn(10);
-//		 DTO dto = new DTO();
-//		 assertEquals(customerTransactionService.addTransaction(Mockito.any()),dto);
+    public void testdeleteTransaction() {
+		doNothing().when(transactionRepository).deleteById((long) 1);
+		customerTransactionService.deleteTransaction((long) 1);
+		verify(transactionRepository, times(1)).deleteById((long) 1);
 	}
 	
+	@Test
+	public void testaddTransaction() {
+
+		Optional<Customer> customer = Optional.of(new Customer());
+		when(customerRepository.findById(Mockito.any())).thenReturn(customer);
+		
+		CustomerTransaction transaction = new CustomerTransaction();
+
+		when(transactionRepository.save(Mockito.any())).thenReturn(transaction);
+
+		DTO dto = new DTO();
+		dto.setTransDate("2022-10-10");
+		DTO returnedDTO = new DTO();
+		DTO expectedDTO = customerTransactionService.addTransaction(dto);
+		assertEquals(expectedDTO.getTransAmount(),returnedDTO.getTransAmount());
+	}
 	
-	
+	@Test
+	public void testupdateTransaction() {
+		List<CustomerTransaction> lst = new ArrayList<>();
+		when(transactionRepository.updateTransaction(0, null, null, null, null)).thenReturn(lst);
+		DTO dto = new DTO();
+		assertEquals(customerTransactionService.updateTransaction(dto),"updated");
+	}
 	
 	
 	

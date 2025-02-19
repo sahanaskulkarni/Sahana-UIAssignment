@@ -31,9 +31,7 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/customer")
 public class CustomerController {
 	
-//	@Autowired
-//	CustomerService customerService;
-	
+
 	@Autowired
 	private CustomerRepo customerRepo;
 	
@@ -48,7 +46,7 @@ public class CustomerController {
 	
 	
 	@PostMapping("/register")
-	public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
+	public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO, HttpSession session){
 		if(customerRepo.findByEmail(registerDTO.getEmail()).isPresent()) {
 			return new ResponseEntity<String>("Name is taken",HttpStatus.BAD_REQUEST);
 		}
@@ -62,6 +60,13 @@ public class CustomerController {
 		customer.setRoles(Collections.singletonList(roles));
 		
 		customerRepo.save(customer);
+		
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(registerDTO.getEmail(), registerDTO.getPassword())
+				);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());  
 		
 		return new ResponseEntity<>("User registered",HttpStatus.OK);
 	}
@@ -84,18 +89,7 @@ public class CustomerController {
         }
 	}
 	
-//	
-//	@GetMapping("/home")
-//    public String home() {
-//		return "home";
-//	}
-//    
-//    @GetMapping("/test")
-//    public String test() {
-//		return "test";
-//	}
-//    
-    
+	
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextHolder.clearContext();
