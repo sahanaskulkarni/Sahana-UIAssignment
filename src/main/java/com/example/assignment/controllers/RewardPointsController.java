@@ -30,12 +30,6 @@ public class RewardPointsController {
         return new ResponseEntity<Integer>(totalPoints,HttpStatus.OK);
     }
 	
-	//points for a month
-//	@GetMapping("/customer/pointPerMonth/{customerId}/{month}/{year}")
-//    public int getPointsByCustomerPerMonth(@PathVariable Long customerId,@PathVariable int month, @PathVariable int year) {
-//		System.out.println("test");
-//		return rewardpointsservice.getMonthlyPoints(customerId, month, year);
-//	}
 	
 	@GetMapping("/detailedRewards")
 	public ResponseEntity<List<YearDTO>> getMonthlyPointsByCustomer(@RequestBody DTO dto) {

@@ -16,6 +16,7 @@ import com.example.assignment.repositories.RewardPointRepo;
 
 @Service
 public class CustomerTransactionService {
+	
 	 @Autowired
 	  private CustomerTransactionRepo transactionRepository;
 	 
