@@ -48,7 +48,7 @@ public class CustomerController {
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO, HttpSession session){
 		if(customerRepo.findByEmail(registerDTO.getEmail()).isPresent()) {
-			return new ResponseEntity<String>("Name is taken",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Email is taken",HttpStatus.BAD_REQUEST);
 		}
 		
 		Customer customer = new Customer();

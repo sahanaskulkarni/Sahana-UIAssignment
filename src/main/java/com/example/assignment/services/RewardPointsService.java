@@ -21,10 +21,6 @@ public class RewardPointsService {
 	 @Autowired
 	 private CustomerTransactionRepo customerTransactionRepo;
 	
-	public List<RewardPoint> getAllPoints() {
-       return rewardPointRepository.findAll();
-   }
-	
 	
 	public int getTotalPointsByCustomer(Long customerId) {
 		List<RewardPoint> lstcustomers =  rewardPointRepository.findByCustomerId(customerId);

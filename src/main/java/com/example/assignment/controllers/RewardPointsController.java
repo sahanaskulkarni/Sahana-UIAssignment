@@ -37,12 +37,6 @@ public class RewardPointsController {
           return new ResponseEntity<List<YearDTO>>(result,HttpStatus.OK);
     }
 
-	
-	//get all
-	@GetMapping("/allRewards")
-    public ResponseEntity<List<RewardPoint>> getAllRewardPoints() {
-		List<RewardPoint> resultList = rewardpointsservice.getAllPoints();
-        return new ResponseEntity<List<RewardPoint>>(resultList,HttpStatus.OK);
-    }
+
 	
 }

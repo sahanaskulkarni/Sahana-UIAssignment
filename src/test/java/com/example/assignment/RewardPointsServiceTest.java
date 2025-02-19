@@ -36,13 +36,6 @@ public class RewardPointsServiceTest {
 	@Mock
 	 private CustomerTransactionRepo customerTransactionRepo;
 	
-	@Test
-	public void testgetAllPoints() {
-		List<RewardPoint> lst = new ArrayList<>();
-		when(rewardPointRepository.findAll()).thenReturn(lst);
-		assertEquals(rewardPointsService.getAllPoints(), lst);
-	}
-	
 	
 	@Test
 	public void testgetTotalPointsByCustomer() {
