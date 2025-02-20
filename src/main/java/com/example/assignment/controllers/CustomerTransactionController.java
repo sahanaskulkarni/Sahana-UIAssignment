@@ -26,9 +26,10 @@ public class CustomerTransactionController {
 	   
 
 		@GetMapping("/getByCustomer")
-	    public ResponseEntity<List<CustomerTransaction>> getTransactions(@RequestBody DTO dto) {
-			List<CustomerTransaction> lstCustomerTransactions = transactionService.getTransactionsByCustomer(dto.getCustomerId());
-	        return new ResponseEntity<List<CustomerTransaction>> (lstCustomerTransactions,HttpStatus.OK);
+	    public ResponseEntity<List<DTO>> getTransactions(@RequestBody DTO dto) {
+			List<DTO> lstCustomerTransactions = transactionService.getTransactionsByCustomer(dto.getCustomerId());
+			
+	        return new ResponseEntity<List<DTO>> (lstCustomerTransactions,HttpStatus.OK);
 	    }
 
 

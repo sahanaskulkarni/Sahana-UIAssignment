@@ -1,6 +1,7 @@
 package com.example.assignment.services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,22 @@ public class CustomerTransactionService {
 	 RewardPointRepo rewardpointrepo;
 	 
 	 
-	public List<CustomerTransaction> getTransactionsByCustomer(Long customerId) {
-       return transactionRepository.findByCustomerId(customerId);
+	public List<DTO> getTransactionsByCustomer(Long customerId) {
+		List<CustomerTransaction> lst = transactionRepository.findByCustomerId(customerId);
+		
+		List<DTO> result = new ArrayList<>(); 
+		for(CustomerTransaction customerTransaction: lst) {
+			DTO dto = new DTO();
+			dto.setTransactionId(customerTransaction.getId());
+			dto.setTransSpentDetails(customerTransaction.getSpentdetails());
+			dto.setTransAmount(customerTransaction.getAmount());
+			dto.setTransDate(customerTransaction.getDate());
+			dto.setCustomerId(customerTransaction.getCustomer().getId());
+			result.add(dto);
+		}
+		
+		
+       return result;
    }
 
 	public DTO addTransaction(DTO dto) {
@@ -70,8 +85,8 @@ public class CustomerTransactionService {
 	 }
 	 
 	 public String deleteTransaction(Long transactionId) {
-		   transactionRepository.deleteByTransactionId(transactionId);
-		 	rewardPointService.deleteByTransactionId(transactionId);
+		 rewardPointService.deleteByTransactionId(transactionId);
+		   transactionRepository.deleteByTransactionId(transactionId); 	
 	        return "Transaction deleted successfully";
 	    }
 	 
