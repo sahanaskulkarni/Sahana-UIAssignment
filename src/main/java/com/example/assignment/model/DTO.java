@@ -1,4 +1,6 @@
-package com.example.assignment.services;
+package com.example.assignment.model;
+
+import java.util.List;
 
 public class DTO {
 	private Long customerId;
@@ -7,7 +9,14 @@ public class DTO {
     private double transAmount;
     private String transDate;
     private int customerTotalPoints;
-	
+    private List<MPointsDTO> monthlyPointsData;
+
+	public List<MPointsDTO> getMonthlyPointsData() {
+		return monthlyPointsData;
+	}
+	public void setMonthlyPointsData(List<MPointsDTO> monthlyPointsData) {
+		this.monthlyPointsData = monthlyPointsData;
+	}
 	public Long getCustomerId() {
 		return customerId;
 	}
@@ -44,6 +53,6 @@ public class DTO {
 	public void setCustomerTotalPoints(int customerTotalPoints) {
 		this.customerTotalPoints = customerTotalPoints;
 	}
-	
+
 	
 }

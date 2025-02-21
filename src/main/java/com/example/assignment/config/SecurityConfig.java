@@ -22,13 +22,16 @@ public class SecurityConfig {
 		 	.authorizeHttpRequests(authz -> authz
 		            .requestMatchers("/swagger-ui/**","/v3/api-docs/**", "/swagger-resources/**", "/webjars/**",
 		            				"/customer/register","/customer/login","/customer/logout").permitAll()
+		            
 		            .requestMatchers("/transactions/add","/transactions/delete","/transactions/update",
 		            		"/transactions/getByCustomer","/rewardpoints/totalpoints",
-		            		"/rewardpoints/detailedRewards","/rewardpoints/allRewards").hasAuthority("ADMIN")  
-		            .requestMatchers("/transactions/getByCustomer","/rewardpoints/totalpoints",
-		            		"/rewardpoints/detailedRewards","/rewardpoints/allRewards").hasAuthority("USER")
-		            .anyRequest().authenticated()
-		        )
+		            		"/rewardpoints/detailedRewards").hasAuthority("ADMIN")  
+		            
+		            .requestMatchers("/transactions/add","/transactions/getByCustomer","/rewardpoints/totalpoints",
+		            		"/rewardpoints/detailedRewards").hasAuthority("USER")
+		            
+		            .anyRequest().authenticated() )
+		 	
 		     .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 		 
          return http.build();

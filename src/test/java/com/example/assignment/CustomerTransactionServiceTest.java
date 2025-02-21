@@ -22,11 +22,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.assignment.model.Customer;
 import com.example.assignment.model.CustomerTransaction;
+import com.example.assignment.model.DTO;
 import com.example.assignment.repositories.CustomerRepo;
 import com.example.assignment.repositories.CustomerTransactionRepo;
 import com.example.assignment.repositories.RewardPointRepo;
 import com.example.assignment.services.CustomerTransactionService;
-import com.example.assignment.services.DTO;
 import com.example.assignment.services.RewardPointsService;
 
 @ExtendWith(MockitoExtension.class)

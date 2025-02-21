@@ -17,12 +17,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.assignment.model.CustomerTransaction;
+import com.example.assignment.model.MonthDTO;
 import com.example.assignment.model.RewardPoint;
+import com.example.assignment.model.YearDTO;
 import com.example.assignment.repositories.CustomerTransactionRepo;
 import com.example.assignment.repositories.RewardPointRepo;
-import com.example.assignment.services.MonthDTO;
 import com.example.assignment.services.RewardPointsService;
-import com.example.assignment.services.YearDTO;
 
 @ExtendWith(MockitoExtension.class)
 public class RewardPointsServiceTest {
@@ -53,14 +53,14 @@ public class RewardPointsServiceTest {
 	}
 	
 	
-	@Test
-	public void testgetMonthlyPoints() {
-		List<CustomerTransaction> lstCustomerTransactions = new ArrayList<>();
-		LocalDate startDate = LocalDate.of(2022,10, 1);
-	    LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
-		when(customerTransactionRepo.findTransactionsByCustomerIdAndDateForPoints((long)1, startDate, endDate)).thenReturn(lstCustomerTransactions);
-		assertEquals(rewardPointsService.getMonthlyPoints((long)1,10,2022), 0);
-	}
+//	@Test
+//	public void testgetMonthlyPoints() {
+//		List<CustomerTransaction> lstCustomerTransactions = new ArrayList<>();
+//		LocalDate startDate = LocalDate.of(2022,10, 1);
+//	    LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+//		when(customerTransactionRepo.findTransactionsByCustomerIdAndDateForPoints((long)1, startDate, endDate)).thenReturn(lstCustomerTransactions);
+//		assertEquals(rewardPointsService.getMonthlyPoints((long)1,10,2022), 0);
+//	}
 	
 	
 	@Test
@@ -78,7 +78,7 @@ public class RewardPointsServiceTest {
 		rewardPoint1.setPoints(150);
 		lstList.add(rewardPoint1);
 		
-		when(rewardPointRepository.getMonthlyByCustId(Mockito.any())).thenReturn(lstList);
+		when(rewardPointRepository.getDetailedRewardsByCustId(Mockito.any())).thenReturn(lstList);
 		List<YearDTO> yrList = new ArrayList<>();
 		YearDTO yearDTO = new YearDTO();
 		yearDTO.setYear(2000);
@@ -90,7 +90,7 @@ public class RewardPointsServiceTest {
 		yearDTO.setData(monLst);
 		yrList.add(yearDTO);
 		
-		List<YearDTO> result = rewardPointsService.getMonthly((long) 1);
+		List<YearDTO> result = rewardPointsService.getDetailedRewards((long) 1);
 		assertEquals(result.get(0).getYear(), yrList.get(0).getYear());
 		
 	}

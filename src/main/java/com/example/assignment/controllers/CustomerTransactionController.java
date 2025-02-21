@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.assignment.model.CustomerTransaction;
+import com.example.assignment.model.DTO;
 import com.example.assignment.services.CustomerTransactionService;
-import com.example.assignment.services.DTO;
 
 @RestController
 @RequestMapping("/transactions")

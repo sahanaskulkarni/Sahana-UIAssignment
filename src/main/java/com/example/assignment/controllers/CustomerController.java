@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.assignment.model.Customer;
+import com.example.assignment.model.LoginDTO;
 import com.example.assignment.model.RegisterDTO;
 import com.example.assignment.model.Roles;
 import com.example.assignment.repositories.CustomerRepo;
 import com.example.assignment.repositories.RolesRepo;
-import com.example.assignment.services.LoginDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

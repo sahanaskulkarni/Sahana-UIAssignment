@@ -1,4 +1,4 @@
-package com.example.assignment.services;
+package com.example.assignment.model;
 
 import java.util.List;
 

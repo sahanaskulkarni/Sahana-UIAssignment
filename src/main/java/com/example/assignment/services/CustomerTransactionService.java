@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.example.assignment.exceptions.CustomerNotFoundException;
 import com.example.assignment.model.Customer;
 import com.example.assignment.model.CustomerTransaction;
+import com.example.assignment.model.DTO;
+import com.example.assignment.model.MPointsDTO;
 import com.example.assignment.model.RewardPoint;
 import com.example.assignment.repositories.CustomerRepo;
 import com.example.assignment.repositories.CustomerTransactionRepo;
@@ -80,6 +82,9 @@ public class CustomerTransactionService {
 		 savedTransaction.setTransDate(saved.getDate());
 		 int totalPoints = rewardPointService.getTotalPointsByCustomer(dto.getCustomerId());
 		 savedTransaction.setCustomerTotalPoints(totalPoints);
+		 
+		 List<MPointsDTO> monthlyLst =  rewardPointService.getMonthlyPoints(dto.getCustomerId(), toSetDate.getYear());
+		 savedTransaction.setMonthlyPointsData(monthlyLst);
 		 
 		 return savedTransaction;
 	 }

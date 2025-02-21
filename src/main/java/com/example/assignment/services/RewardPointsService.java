@@ -1,15 +1,16 @@
 package com.example.assignment.services;
 
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.assignment.model.CustomerTransaction;
+import com.example.assignment.model.MPointsDTO;
+import com.example.assignment.model.MonthDTO;
 import com.example.assignment.model.RewardPoint;
+import com.example.assignment.model.YearDTO;
 import com.example.assignment.repositories.CustomerTransactionRepo;
 import com.example.assignment.repositories.RewardPointRepo;
 
@@ -47,23 +48,31 @@ public class RewardPointsService {
        return points;
    }
 
-	public int getMonthlyPoints(Long customerId, int month, int year) {
+//	public int getMonthlyPoints(Long customerId, int month, int year) {
 	
-		LocalDate startDate = LocalDate.of(year,month, 1);
-       LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
-     
-       List<CustomerTransaction> transactions = customerTransactionRepo.findTransactionsByCustomerIdAndDateForPoints(customerId,startDate,endDate);
-       int totalPoints = 0;
-       for (var transaction : transactions) {
-           totalPoints += calculateRewardPoints(transaction.getAmount());
-       }
+//		LocalDate startDate = LocalDate.of(year,month, 1);
+//       LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+//     
+//       List<CustomerTransaction> transactions = customerTransactionRepo.findTransactionsByCustomerIdAndDateForPoints(customerId,startDate,endDate);
+//       int totalPoints = 0;
+//       for (var transaction : transactions) {
+//           totalPoints += calculateRewardPoints(transaction.getAmount());
+//       }
+		
+		
        
-		return totalPoints;
+//		return totalPoints;
+//	}
+	
+	public List<MPointsDTO> getMonthlyPoints(Long customerId, int year) {
+		List<MPointsDTO> lst = rewardPointRepository.getMonthly(customerId,year);
+		return lst;
+		
 	}
 	
 	
-	public List<YearDTO> getMonthly(Long customerId) {
-		List<RewardPoint> lstByCustId = rewardPointRepository.getMonthlyByCustId(customerId);
+	public List<YearDTO> getDetailedRewards(Long customerId) {
+		List<RewardPoint> lstByCustId = rewardPointRepository.getDetailedRewardsByCustId(customerId);
 		List<YearDTO> yearList = new ArrayList<>();
 		
 		for(RewardPoint rewards:lstByCustId) {
