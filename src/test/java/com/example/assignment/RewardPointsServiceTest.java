@@ -61,10 +61,10 @@ public class RewardPointsServiceTest {
 	@Test
 	public void testgetMonthlyPoints() {
 		List<MPointsDTO> lst = new ArrayList<>();
-		when(rewardPointRepository.getMonthly((long) 1,2000)).thenReturn(lst);
-		assertEquals(rewardPointsService.getMonthlyPoints((long) 1,2000), Collections.EMPTY_LIST);
+		when(rewardPointRepository.getMonthly((long) 1)).thenReturn(lst);
+		assertEquals(rewardPointsService.getMonthlyPoints((long) 1), Collections.EMPTY_LIST);
 	}
-	
+
 	
 	@Test
 	public void testgetMonthly() {

@@ -44,10 +44,14 @@ public class CustomerTransactionService {
 			dto.setTransAmount(customerTransaction.getAmount());
 			dto.setTransDate(customerTransaction.getDate());
 			dto.setCustomerId(customerTransaction.getCustomer().getId());
+			int totalPoints = rewardPointService.getTotalPointsByCustomer(dto.getCustomerId());
+			dto.setCustomerTotalPoints(totalPoints);
+			List<MPointsDTO> monthlyLst =  rewardPointService.getMonthlyPoints(dto.getCustomerId());
+			dto.setMonthlyPointsData(monthlyLst);
 			result.add(dto);
 		}
 		
-		
+	
        return result;
    }
 
@@ -83,7 +87,7 @@ public class CustomerTransactionService {
 		 int totalPoints = rewardPointService.getTotalPointsByCustomer(dto.getCustomerId());
 		 savedTransaction.setCustomerTotalPoints(totalPoints);
 		 
-		 List<MPointsDTO> monthlyLst =  rewardPointService.getMonthlyPoints(dto.getCustomerId(), toSetDate.getYear());
+		 List<MPointsDTO> monthlyLst =  rewardPointService.getMonthlyPoints(dto.getCustomerId());
 		 savedTransaction.setMonthlyPointsData(monthlyLst);
 		 
 		 return savedTransaction;

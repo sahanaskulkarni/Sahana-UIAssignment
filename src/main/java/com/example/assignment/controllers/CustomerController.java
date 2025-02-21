@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.assignment.exceptions.AccessDeniedException;
 import com.example.assignment.model.Customer;
 import com.example.assignment.model.LoginDTO;
 import com.example.assignment.model.RegisterDTO;
@@ -50,7 +51,7 @@ public class CustomerController {
 		if(customerRepo.findByEmail(registerDTO.getEmail()).isPresent()) {
 			return new ResponseEntity<String>("Email is taken",HttpStatus.BAD_REQUEST);
 		}
-		
+
 		Customer customer = new Customer();
 		customer.setName(registerDTO.getName());
 		customer.setEmail(registerDTO.getEmail());
@@ -62,13 +63,14 @@ public class CustomerController {
 		customerRepo.save(customer);
 		
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(registerDTO.getEmail(), registerDTO.getPassword())
-				);
+				new UsernamePasswordAuthenticationToken(registerDTO.getEmail(), registerDTO.getPassword()));
+
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());  
 		
 		return new ResponseEntity<>("User registered",HttpStatus.OK);
+
 	}
 	
 	@PostMapping("/login")
@@ -84,19 +86,22 @@ public class CustomerController {
 			return new ResponseEntity<>("User signed in",HttpStatus.OK);
 		}
 		catch (Exception e) {
-			
-            return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+			throw new AccessDeniedException("Authentication failed");
         }
 	}
 	
 	
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
-        SecurityContextHolder.clearContext();
-        request.getSession().invalidate();
-        response.setStatus(HttpServletResponse.SC_OK);
-        
-        return new ResponseEntity<>("User logged out successfully", HttpStatus.OK);
+    	try {
+	        SecurityContextHolder.clearContext();
+	        request.getSession().invalidate();
+	        response.setStatus(HttpServletResponse.SC_OK);
+	        
+	        return new ResponseEntity<>("User logged out successfully", HttpStatus.OK);
+    	} catch (Exception e) {
+    		return new ResponseEntity<>("User is not logged out", HttpStatus.EXPECTATION_FAILED);
+		}
     }
 	
 	

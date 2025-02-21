@@ -37,11 +37,8 @@ public interface RewardPointRepo extends JpaRepository<RewardPoint, Long> {
 	 int deleteByTrans(@Param("transactionId") Long transactionId);
 
 	 
-	 @Query(value="SELECT t.month, SUM(t.points) as points FROM reward_point t WHERE t.customer_id= :customerId  AND t.year= :year group by t.month order by t.month desc ", nativeQuery = true)
-	 List<MPointsDTO> getMonthly(@Param("customerId") Long customerId, @Param("year") int year);
+	 @Query(value="SELECT t.year,t.month, SUM(t.points) as points FROM reward_point t WHERE t.customer_id= :customerId group by t.year,t.month order by t.year desc,t.month desc", nativeQuery = true)
+	 List<MPointsDTO> getMonthly(@Param("customerId") Long customerId);
 	 
-	 
-	 
-	 
-	 
+ 
 }

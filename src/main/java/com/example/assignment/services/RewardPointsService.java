@@ -49,8 +49,8 @@ public class RewardPointsService {
    }
 
 	
-	public List<MPointsDTO> getMonthlyPoints(Long customerId, int year) {
-		List<MPointsDTO> lst = rewardPointRepository.getMonthly(customerId,year);
+	public List<MPointsDTO> getMonthlyPoints(Long customerId) {
+		List<MPointsDTO> lst = rewardPointRepository.getMonthly(customerId);
 		return lst;
 		
 	}
