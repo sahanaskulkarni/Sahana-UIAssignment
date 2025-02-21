@@ -24,6 +24,8 @@ import com.example.assignment.model.Roles;
 import com.example.assignment.repositories.CustomerRepo;
 import com.example.assignment.repositories.RolesRepo;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -47,6 +49,11 @@ public class CustomerController {
 	
 	
 	@PostMapping("/register")
+	@Operation(summary = "Create a new customer", description = "Creates a new customer based on email-id",
+				responses= {
+					@ApiResponse( description = "Success",responseCode = "200"),
+					@ApiResponse(description = "Forbidden",responseCode = "403")
+				})
 	public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO, HttpSession session){
 		if(customerRepo.findByEmail(registerDTO.getEmail()).isPresent()) {
 			return new ResponseEntity<String>("Email is taken",HttpStatus.BAD_REQUEST);
@@ -74,6 +81,11 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/login")
+	@Operation(summary = "Customer Login", description = "Customer is logged-in if authenticated credentials are used",
+			responses= {
+					@ApiResponse( description = "Success",responseCode = "200"),
+					@ApiResponse(description = "Unauthorized",responseCode = "403")
+				})
 	public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO, HttpSession session){
 		try {
 			Authentication authentication = authenticationManager.authenticate(
@@ -92,6 +104,7 @@ public class CustomerController {
 	
 	
     @PostMapping("/logout")
+    @Operation(summary = "Customer Logout", description = "Customer is logged out")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
     	try {
 	        SecurityContextHolder.clearContext();

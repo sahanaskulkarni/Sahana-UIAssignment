@@ -18,10 +18,13 @@ import com.example.assignment.model.MPointsDTO;
 import com.example.assignment.model.YearDTO;
 import com.example.assignment.services.RewardPointsService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/rewardpoints")
+@SecurityRequirement(name = "bearerAuth")
 public class RewardPointsController {
 	
 	@Autowired
@@ -30,7 +33,11 @@ public class RewardPointsController {
 	
 	//get total reward points
 	@GetMapping("/totalpoints/{customerId}")
-	@SecurityRequirement(name = "bearerAuth")
+	@Operation(summary = "Total reward points", description = "Total reward points of a customer are returned",
+			responses= {
+					@ApiResponse( description = "Success",responseCode = "200"),
+					@ApiResponse(description = "Unauthorized",responseCode = "403")
+				})
     public ResponseEntity<Integer> getRewardPointsByCustomer(@PathVariable Long customerId) {
 		try {
 			int totalPoints = rewardpointsservice.getTotalPointsByCustomer(customerId);
@@ -42,7 +49,11 @@ public class RewardPointsController {
 	
 	
 	@GetMapping("/detailedRewards/{customerId}")
-	@SecurityRequirement(name = "bearerAuth")
+	@Operation(summary = "Details of reward points earned", description = "Detailed information of all reward points earned",
+			responses= {
+					@ApiResponse( description = "Success",responseCode = "200"),
+					@ApiResponse(description = "Unauthorized",responseCode = "403")
+				})
 	public ResponseEntity<List<YearDTO>> getMonthlyPointsByCustomer(@PathVariable Long customerId) {
 		try {
 		  List<YearDTO> result = rewardpointsservice.getDetailedRewards(customerId);

@@ -2,12 +2,15 @@ package com.example.assignment.model;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class DTO {
-	private Long customerId;
-	private Long transactionId;
-	private String transSpentDetails;
-    private double transAmount;
-    private String transDate;
+
+	private Long customerId; 
+	private Long transactionId;	 
+	private String transSpentDetails;	 
+    private double transAmount;	 
+    private String transDate;	 
     private int customerTotalPoints;
     private List<MPointsDTO> monthlyPointsData;
 

@@ -19,8 +19,12 @@ import com.example.assignment.model.DTO;
 import com.example.assignment.services.CustomerTransactionService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 @RestController
 @RequestMapping("/transactions")
+@SecurityRequirement(name = "bearerAuth")
 public class CustomerTransactionController {
 	
 		@Autowired
@@ -28,7 +32,11 @@ public class CustomerTransactionController {
 	   
 		
 		@GetMapping("/getByCustomer/{customerId}")
-		@SecurityRequirement(name = "bearerAuth")
+		@Operation(summary = "Get all transactions", description = "Fetches all transactions of a customer",
+					responses= {
+							@ApiResponse( description = "Success",responseCode = "200"),
+							@ApiResponse(description = "Unauthorized",responseCode = "403")
+						})
 	    public ResponseEntity<List<DTO>> getTransactions(@PathVariable Long customerId) {
 			try {
 				List<DTO> lstCustomerTransactions = transactionService.getTransactionsByCustomer(customerId);			
@@ -38,9 +46,13 @@ public class CustomerTransactionController {
 			}
 	    }
 
-
+		
 		@PostMapping("/add")
-		@SecurityRequirement(name = "bearerAuth")
+		@Operation(summary = "Addition of transaction", description = "Transaction is added and reward points are calculated",
+						responses= {
+							@ApiResponse( description = "Success",responseCode = "200"),
+							@ApiResponse(description = "Unauthorized",responseCode = "403")
+					})
 	    public ResponseEntity<DTO> addTransaction(@RequestBody DTO dto) {
 			try {
 				DTO resultDto = transactionService.addTransaction(dto);
@@ -50,9 +62,12 @@ public class CustomerTransactionController {
 			}
 	    }
 	
-
 		 @DeleteMapping("/delete")
-		 @SecurityRequirement(name = "bearerAuth")
+		 @Operation(summary = "Deletion of transaction", description = "Transaction is deleted and corresponding reward points are deducted",
+		 			responses= {
+							@ApiResponse( description = "Success",responseCode = "200"),
+							@ApiResponse(description = "Unauthorized",responseCode = "403")
+						})
 		   public ResponseEntity<String> deleteTransaction(@RequestBody DTO dto) {
 			 try {
 		        transactionService.deleteTransaction(dto.getTransactionId());
@@ -64,7 +79,11 @@ public class CustomerTransactionController {
 		 
 		 
 		 @PutMapping("/update")
-		 @SecurityRequirement(name = "bearerAuth")
+		 @Operation(summary = "Updation of transaction", description = "Transaction is updated based on the fields passed to be updated and also corresponding reward points are updated",
+		 					responses= {
+									@ApiResponse( description = "Success",responseCode = "200"),
+									@ApiResponse(description = "Unauthorized",responseCode = "403")
+					})
 		 public ResponseEntity<String> updateTransaction(@RequestBody DTO dto) {
 			 try {
 				 transactionService.updateTransaction(dto);
