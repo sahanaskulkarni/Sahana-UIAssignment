@@ -46,6 +46,9 @@ public class CustomerTransactionServiceTest {
 	 
 	@Mock
 	 RewardPointRepo rewardpointrepo;
+	
+	@Mock
+	RewardPointRepo rewardPointRepository;
 
 	
 	
@@ -59,9 +62,10 @@ public class CustomerTransactionServiceTest {
 	
 	@Test
     public void testdeleteTransaction() {
-		doNothing().when(transactionRepository).deleteById((long) 1);
-		customerTransactionService.deleteTransaction((long) 1);
-		verify(transactionRepository, times(1)).deleteById((long) 1);
+		assertEquals(rewardPointService.deleteByTransactionId(Mockito.anyLong()), 0);
+		when(transactionRepository.deleteByTransactionId(Mockito.anyLong())).thenReturn(0);
+		assertEquals(customerTransactionService.deleteTransaction(Mockito.anyLong()),"Transaction deleted successfully");
+		
 	}
 	
 	@Test

@@ -48,21 +48,6 @@ public class RewardPointsService {
        return points;
    }
 
-//	public int getMonthlyPoints(Long customerId, int month, int year) {
-	
-//		LocalDate startDate = LocalDate.of(year,month, 1);
-//       LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
-//     
-//       List<CustomerTransaction> transactions = customerTransactionRepo.findTransactionsByCustomerIdAndDateForPoints(customerId,startDate,endDate);
-//       int totalPoints = 0;
-//       for (var transaction : transactions) {
-//           totalPoints += calculateRewardPoints(transaction.getAmount());
-//       }
-		
-		
-       
-//		return totalPoints;
-//	}
 	
 	public List<MPointsDTO> getMonthlyPoints(Long customerId, int year) {
 		List<MPointsDTO> lst = rewardPointRepository.getMonthly(customerId,year);
@@ -155,8 +140,8 @@ public class RewardPointsService {
 	}
 
 
-	public void deleteByTransactionId(Long transactionId) {
-		rewardPointRepository.deleteByTrans(transactionId);
+	public int deleteByTransactionId(Long transactionId) {
+		return rewardPointRepository.deleteByTrans(transactionId);
 	}
 	
 	

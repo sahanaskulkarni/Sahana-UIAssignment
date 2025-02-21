@@ -89,13 +89,14 @@ public class CustomerTransactionService {
 		 return savedTransaction;
 	 }
 	 
+	
 	 public String deleteTransaction(Long transactionId) {
-		 rewardPointService.deleteByTransactionId(transactionId);
-		   transactionRepository.deleteByTransactionId(transactionId); 	
+		 	rewardPointService.deleteByTransactionId(transactionId);
+		    transactionRepository.deleteByTransactionId(transactionId); 	
 	        return "Transaction deleted successfully";
 	    }
 	 
-
+	 
 	public String updateTransaction(DTO dto) {
 		try {
 			transactionRepository.updateTransaction(dto.getTransAmount(),dto.getTransSpentDetails(),dto.getTransDate(),dto.getCustomerId(),dto.getTransactionId());

@@ -3,10 +3,14 @@ package com.example.assignment;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.booleanThat;
 import static org.mockito.ArgumentMatchers.intThat;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +21,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.assignment.model.CustomerTransaction;
+import com.example.assignment.model.MPointsDTO;
 import com.example.assignment.model.MonthDTO;
 import com.example.assignment.model.RewardPoint;
 import com.example.assignment.model.YearDTO;
@@ -53,14 +58,12 @@ public class RewardPointsServiceTest {
 	}
 	
 	
-//	@Test
-//	public void testgetMonthlyPoints() {
-//		List<CustomerTransaction> lstCustomerTransactions = new ArrayList<>();
-//		LocalDate startDate = LocalDate.of(2022,10, 1);
-//	    LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
-//		when(customerTransactionRepo.findTransactionsByCustomerIdAndDateForPoints((long)1, startDate, endDate)).thenReturn(lstCustomerTransactions);
-//		assertEquals(rewardPointsService.getMonthlyPoints((long)1,10,2022), 0);
-//	}
+	@Test
+	public void testgetMonthlyPoints() {
+		List<MPointsDTO> lst = new ArrayList<>();
+		when(rewardPointRepository.getMonthly((long) 1,2000)).thenReturn(lst);
+		assertEquals(rewardPointsService.getMonthlyPoints((long) 1,2000), Collections.EMPTY_LIST);
+	}
 	
 	
 	@Test
@@ -119,9 +122,16 @@ public class RewardPointsServiceTest {
 		
 		boolean returned = rewardPointsService.containsMonth(list, 12);
 		assertEquals(returned,true);
-		
+	}
+	
+	
+	@Test
+	public void testdeleteByTransactionId() {
+		when(rewardPointRepository.deleteByTrans(Mockito.any())).thenReturn(0);
+		assertEquals(rewardPointsService.deleteByTransactionId((long) 1), 0);
 		
 	}
+	
 	
 	
 	
