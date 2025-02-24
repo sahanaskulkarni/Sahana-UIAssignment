@@ -31,7 +31,7 @@ public interface CustomerTransactionRepo extends JpaRepository<CustomerTransacti
 	  
 	  @Modifying
 	  @Transactional
-	  @Query(value ="UPDATE public.customer_transaction SET amount = CASE WHEN :amount IS NOT NULL THEN :amount ELSE amount END,spentdetails = CASE WHEN :spentdetails IS NOT NULL THEN :spentdetails ELSE spentdetails END,date = CASE WHEN :date IS NOT NULL THEN :date ELSE date END where customer_id= :customerId and id= :transactionId", nativeQuery = true)
+	  @Query(value ="UPDATE public.customer_transaction SET amount = CASE WHEN :amount <> 0 THEN :amount ELSE amount END,spentdetails = CASE WHEN :spentdetails IS NOT NULL THEN :spentdetails ELSE spentdetails END,date = CASE WHEN :date IS NOT NULL THEN :date ELSE date END where customer_id= :customerId and id= :transactionId", nativeQuery = true)
 	  int updateTransaction(
 				@Param("amount") double amount,
 				@Param("spentdetails") String spentdetails,

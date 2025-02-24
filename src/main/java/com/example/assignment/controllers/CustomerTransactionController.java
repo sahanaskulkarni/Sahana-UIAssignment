@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.assignment.exceptions.TransactionException;
+import com.example.assignment.model.AddTransDTO;
 import com.example.assignment.model.DTO;
+import com.example.assignment.model.DeleteTransDTO;
 import com.example.assignment.services.CustomerTransactionService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
@@ -53,7 +55,7 @@ public class CustomerTransactionController {
 							@ApiResponse( description = "Success",responseCode = "200"),
 							@ApiResponse(description = "Unauthorized",responseCode = "403")
 					})
-	    public ResponseEntity<DTO> addTransaction(@RequestBody DTO dto) {
+	    public ResponseEntity<DTO> addTransaction(@RequestBody AddTransDTO dto) {
 			try {
 				DTO resultDto = transactionService.addTransaction(dto);
 		        return new ResponseEntity<DTO>(resultDto,HttpStatus.OK);
@@ -61,6 +63,7 @@ public class CustomerTransactionController {
 				throw new TransactionException("Addition of transaction failed");
 			}
 	    }
+		
 	
 		 @DeleteMapping("/delete")
 		 @Operation(summary = "Deletion of transaction", description = "Transaction is deleted and corresponding reward points are deducted",
@@ -68,7 +71,7 @@ public class CustomerTransactionController {
 							@ApiResponse( description = "Success",responseCode = "200"),
 							@ApiResponse(description = "Unauthorized",responseCode = "403")
 						})
-		   public ResponseEntity<String> deleteTransaction(@RequestBody DTO dto) {
+		   public ResponseEntity<String> deleteTransaction(@RequestBody DeleteTransDTO dto) {
 			 try {
 		        transactionService.deleteTransaction(dto.getTransactionId());
 		        return new ResponseEntity<String>("Transaction deleted successfully",HttpStatus.OK);

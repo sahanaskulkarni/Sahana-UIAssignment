@@ -20,6 +20,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.example.assignment.model.AddTransDTO;
 import com.example.assignment.model.Customer;
 import com.example.assignment.model.CustomerTransaction;
 import com.example.assignment.model.DTO;
@@ -78,7 +79,7 @@ public class CustomerTransactionServiceTest {
 
 		when(transactionRepository.save(Mockito.any())).thenReturn(transaction);
 
-		DTO dto = new DTO();
+		AddTransDTO dto = new AddTransDTO();
 		dto.setTransDate("2022-10-10");
 		DTO returnedDTO = new DTO();
 		DTO expectedDTO = customerTransactionService.addTransaction(dto);

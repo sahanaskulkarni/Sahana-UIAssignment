@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.assignment.exceptions.CustomerNotFoundException;
+import com.example.assignment.model.AddTransDTO;
 import com.example.assignment.model.Customer;
 import com.example.assignment.model.CustomerTransaction;
 import com.example.assignment.model.DTO;
@@ -55,7 +56,7 @@ public class CustomerTransactionService {
        return result;
    }
 
-	public DTO addTransaction(DTO dto) {
+	public DTO addTransaction(AddTransDTO dto) {
 		 Customer customer = customerRepository.findById(dto.getCustomerId())
 				 .orElseThrow(()-> new CustomerNotFoundException("Customer not found"));
 		 
