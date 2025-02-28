@@ -3,7 +3,6 @@ package com.example.assignment.services;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,26 +100,39 @@ public class CustomerTransactionService {
 	        return "Transaction deleted successfully";
 	    }
 	 
-	 
+	
 	public String updateTransaction(DTO dto) {
 		try {
-			transactionRepository.updateTransaction(dto.getTransAmount(),dto.getTransSpentDetails(),dto.getTransDate(),dto.getCustomerId(),dto.getTransactionId());
-			try {
-				LocalDate toSetDate;
+			CustomerTransaction saved = transactionRepository.findById(dto.getTransactionId())
+					.orElseThrow(()-> new CustomerNotFoundException("Customer not found"));
+			
+			RewardPoint rewardSaved = rewardpointrepo.findByCustomerIdAndTransactionId(dto.getCustomerId(),dto.getTransactionId());
+			
+			if(dto.getTransAmount()!=0.0 && dto.getTransAmount()!=saved.getAmount()) {
+				saved.setAmount(dto.getTransAmount());
 				int points = rewardPointService.calculateRewardPoints(dto.getTransAmount());
-				if(dto.getTransDate()!=null) {
-					toSetDate = LocalDate.parse(dto.getTransDate());
-					rewardpointrepo.updateRewards(toSetDate.getMonthValue(),toSetDate.getYear(),points,dto.getCustomerId(),dto.getTransactionId());
-				}
-				else {
-					rewardpointrepo.updateRewards(null,null,points,dto.getCustomerId(),dto.getTransactionId());
-				}
+				rewardSaved.setPoints(points);
 			}
-			catch(Exception ex) {}
+			if (dto.getTransSpentDetails()!=null && !dto.getTransSpentDetails().equals(saved.getSpentdetails())) {
+				saved.setSpentdetails(dto.getTransSpentDetails());
+			}
+			if (dto.getTransDate()!=null && !dto.getTransDate().equals(saved.getDate())) {
+				saved.setDate(dto.getTransDate());
+				LocalDate toSetDate = LocalDate.parse(dto.getTransDate());
+				rewardSaved.setMonth(toSetDate.getMonthValue());
+				rewardSaved.setYear(toSetDate.getYear());
+			}
+			
+			transactionRepository.save(saved);
+			rewardpointrepo.save(rewardSaved);
+			
 		}
 		catch(Exception e) {}
 
 		return "updated";
 		
 	}
+	
+	
+	
 }

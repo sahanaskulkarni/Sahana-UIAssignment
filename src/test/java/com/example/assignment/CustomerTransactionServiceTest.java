@@ -24,6 +24,7 @@ import com.example.assignment.model.AddTransDTO;
 import com.example.assignment.model.Customer;
 import com.example.assignment.model.CustomerTransaction;
 import com.example.assignment.model.DTO;
+import com.example.assignment.model.RewardPoint;
 import com.example.assignment.repositories.CustomerRepo;
 import com.example.assignment.repositories.CustomerTransactionRepo;
 import com.example.assignment.repositories.RewardPointRepo;
@@ -88,10 +89,20 @@ public class CustomerTransactionServiceTest {
 	
 	@Test
 	public void testupdateTransaction() {
-		List<CustomerTransaction> lst = new ArrayList<>();
-		when(transactionRepository.updateTransaction(0, null, null, null, null)).thenReturn(0);
+		Optional<CustomerTransaction> customerTransaction = Optional.of(new CustomerTransaction());
+		when(transactionRepository.findById(Mockito.any())).thenReturn(customerTransaction);
+		
+		RewardPoint rewardSaved = new RewardPoint();
+		when(rewardpointrepo.findByCustomerIdAndTransactionId(Mockito.any(),Mockito.any())).thenReturn(rewardSaved);
+		
+		
 		DTO dto = new DTO();
+		dto.setTransAmount(1000);
+		dto.setTransSpentDetails("test");
+		dto.setTransDate("2020-12-09");
 		assertEquals(customerTransactionService.updateTransaction(dto),"updated");
+		
+		
 	}
 	
 	

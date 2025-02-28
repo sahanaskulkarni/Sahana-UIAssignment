@@ -29,16 +29,7 @@ public interface CustomerTransactionRepo extends JpaRepository<CustomerTransacti
 	        @Param("endDate") LocalDate endDate
 	    );
 	  
-	  @Modifying
-	  @Transactional
-	  @Query(value ="UPDATE public.customer_transaction SET amount = CASE WHEN :amount <> 0 THEN :amount ELSE amount END,spentdetails = CASE WHEN :spentdetails IS NOT NULL THEN :spentdetails ELSE spentdetails END,date = CASE WHEN :date IS NOT NULL THEN :date ELSE date END where customer_id= :customerId and id= :transactionId", nativeQuery = true)
-	  int updateTransaction(
-				@Param("amount") double amount,
-				@Param("spentdetails") String spentdetails,
-		        @Param("date") String date,
-		        @Param("customerId") Long customerId,
-		        @Param("transactionId") Long transactionId
-		    );
+
 
 	  
 }

@@ -16,20 +16,10 @@ public interface RewardPointRepo extends JpaRepository<RewardPoint, Long> {
 	
 	 List<RewardPoint> findByCustomerId(Long customerId);
 	 
+	 RewardPoint findByCustomerIdAndTransactionId(Long customerId, Long transactionId);
+	 
 	 @Query(value="select * from reward_point r where r.customer_id= :customerId", nativeQuery = true)
 	 List<RewardPoint> getDetailedRewardsByCustId(@Param("customerId") Long customerId);
-
-	 @Modifying
-	 @Transactional
-	  @Query(value ="UPDATE public.reward_point SET points = CASE WHEN :points IS NOT NULL THEN :points ELSE points END where customer_id= :customerId and transaction_id= :transactionId", nativeQuery = true)
-	  int updateRewards(
-			  @Param("month") Object month,
-			  @Param("year") Object year,
-		        @Param("points") int points,
-		        @Param("customerId") Long customerId,
-		        @Param("transactionId") Long transactionId
-		    );
-
 	 
 	 @Modifying
 	 @Transactional
