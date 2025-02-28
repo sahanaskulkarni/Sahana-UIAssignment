@@ -1,7 +1,9 @@
 package com.example.assignment.services;
 
 
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,17 @@ public class RewardPointsService {
 	
 	public List<MPointsDTO> getMonthlyPoints(Long customerId) {
 		List<MPointsDTO> lst = rewardPointRepository.getMonthly(customerId);
-		return lst;
+		List<MPointsDTO> newLst = new ArrayList<>();
+		for(MPointsDTO mPointsDTO : lst) {
+			String monthOfYear = Month.of(mPointsDTO.getMonth()).getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH);
+			MPointsDTO newMPointsDTO =  new MPointsDTO();
+			newMPointsDTO.setPoints(mPointsDTO.getPoints());
+			newMPointsDTO.setYear(mPointsDTO.getYear());
+			newMPointsDTO.setMonthOfYear(monthOfYear);
+			newLst.add(newMPointsDTO);
+		}
+		
+		return newLst;
 		
 	}
 	
@@ -140,6 +152,6 @@ public class RewardPointsService {
 	public int deleteByTransactionId(Long transactionId) {
 		return rewardPointRepository.deleteByTrans(transactionId);
 	}
-	
+
 	
 }
