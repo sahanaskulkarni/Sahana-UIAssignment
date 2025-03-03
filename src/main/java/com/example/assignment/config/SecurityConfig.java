@@ -23,12 +23,10 @@ public class SecurityConfig {
 		            .requestMatchers("/swagger-ui/**","/v3/api-docs/**", "/swagger-resources/**", "/webjars/**",
 		            				"/customer/register","/customer/login","/customer/logout").permitAll()
 		            
-		            .requestMatchers("/transactions/add","/transactions/delete","/transactions/update",
-		            		"/transactions/getByCustomer","/rewardpoints/totalpoints",
-		            		"/rewardpoints/detailedRewards").hasAuthority("ADMIN")  
-		            
+		            .requestMatchers("/transactions/delete","/transactions/update").hasAuthority("ADMIN")  
+
 		            .requestMatchers("/transactions/add","/transactions/getByCustomer","/rewardpoints/totalpoints",
-		            		"/rewardpoints/detailedRewards").hasAuthority("USER")
+		            					"/rewardpoints/detailedRewards").hasAnyAuthority("ADMIN","USER")
 		            
 		            .anyRequest().authenticated() )
 		 	
