@@ -81,8 +81,6 @@ public class RewardPointsController {
 		} catch (Exception e) {
 			throw new RewardPointsException("Unable to fetch monthly reward points");
 		}
-		
-	
 	}
 	
 	
