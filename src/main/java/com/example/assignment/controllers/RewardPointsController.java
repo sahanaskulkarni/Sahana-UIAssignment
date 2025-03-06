@@ -85,10 +85,4 @@ public class RewardPointsController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
 }
