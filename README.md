@@ -1,7 +1,7 @@
 **1. Overview -**  
-  A retailer offers a rewards program to its customers, awarding points based on each recorded purchase.
-  Purpose: Application is used to calculate rewards points earned by customers on each transaction. 
-  Scope: Customers are first registered before using the application. Transactions can be added, deleted and updated against the registered customer. Based on the amount of transaction         rewards are calculated. A customer receives 2 points for every dollar spent over $100 in each transaction, plus 1 point for every dollar spent between $50 and $100 in each transaction. Total points earned by a customer and detailed points added based on year and month can be retrieved. Login and logout functionalities are included. Apis are accessible only on the basis of roles mentioned during registration.
+  A retailer offers a rewards program to its customers, awarding points based on each recorded purchase.  
+  Purpose: Application is used to calculate rewards points earned by customers on each transaction.   
+  Scope: Customers are first registered before using the application. Transactions can be added, deleted and updated against the registered customer. Based on the amount of transaction rewards are calculated. A customer receives 2 points for every dollar spent over $100 in each transaction, plus 1 point for every dollar spent between $50 and $100 in each transaction. Total points earned by a customer and detailed points added based on year and month can be retrieved. Login and logout functionalities are included. Apis are accessible only on the basis of roles mentioned during registration.
 
 **2. Versions -**
    Java : 8, 
