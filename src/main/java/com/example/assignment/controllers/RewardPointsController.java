@@ -34,6 +34,20 @@ public class RewardPointsController {
 	@Autowired
 	RewardPointsService rewardpointsservice;
 	
+	@Operation(summary = "Details of reward points earned", description = "Detailed information of all reward points earned",
+			responses= {
+					@ApiResponse( description = "Success",responseCode = "200"),
+					@ApiResponse(description = "Unauthorized",responseCode = "403")
+				})
+	@GetMapping("/customerRewardPoints/{customerId}/{year}/{month}")
+	public  ResponseEntity<Map<Long, List<Map<String, Integer>>>> monthlyPoints(@PathVariable Long customerId,@PathVariable Long year,@PathVariable Long month) {
+		try {
+			Map<Long, List<Map<String, Integer>>> result = rewardpointsservice.getMonthlyRewards(customerId,year,month);
+			return new ResponseEntity<Map<Long, List<Map<String, Integer>>>>(result,HttpStatus.OK);
+		} catch (Exception e) {
+			throw new RewardPointsException("Unable to fetch monthly reward points");
+		}
+	}
 	
 	//get total reward points
 //	@GetMapping("/totalpoints/{customerId}")
@@ -67,22 +81,5 @@ public class RewardPointsController {
 //		}
 //    }
 //	
-	
-	@Operation(summary = "Details of reward points earned", description = "Detailed information of all reward points earned",
-			responses= {
-					@ApiResponse( description = "Success",responseCode = "200"),
-					@ApiResponse(description = "Unauthorized",responseCode = "403")
-				})
-	@GetMapping("/monthlyPoints/{customerId}/{year}/{month}")
-	public  ResponseEntity<Map<Long, List<Map<String, Integer>>>> monthlyPoints(@PathVariable Long customerId,@PathVariable Long year,@PathVariable Long month) {
-		try {
-			Map<Long, List<Map<String, Integer>>> result = rewardpointsservice.getMonthlyRewards(customerId,year,month);
-			return new ResponseEntity<Map<Long, List<Map<String, Integer>>>>(result,HttpStatus.OK);
-		} catch (Exception e) {
-			throw new RewardPointsException("Unable to fetch monthly reward points");
-		}
-	}
-	
-	
 	
 }

@@ -210,6 +210,7 @@ public class RewardPointsService {
 		NewPointsDTO dto2 = threeMonthsLst.get(1);
 		NewPointsDTO dto3 = threeMonthsLst.get(2);
 		
+		// for enddate as february
 		if ((endDateObj.getMonth()==2) && (dto2.getYear()!=(dto3.getYear()))) {
 
 			
@@ -234,9 +235,9 @@ public class RewardPointsService {
 			}
 		}
 		
+		// for enddate as january
 		if ((endDateObj.getMonth()==1) && (dto2.getYear()!=(dto3.getYear()))) {
 
-			
 			if ((dto2.getMonth()!=12) ) {
 				dto2.setMonth(12);
 				dto2.setPoints(0);
@@ -246,7 +247,6 @@ public class RewardPointsService {
 				NewPointsDTO newObjDto = copiedList.stream().filter(n->(n.getMonth()==(11)) &&
 																(n.getYear()==(dto3.getYear()-1))).findFirst().orElse(null);
 				
-
 				if (newObjDto!=null) {
 					dto1.setMonth(newObjDto.getMonth());
 					dto1.setPoints(newObjDto.getPoints());
@@ -254,10 +254,10 @@ public class RewardPointsService {
 					dto1.setMonth(11);
 					dto1.setPoints(0);
 				}
-			
 			}
 		}
 		
+		//for other months
 		if (((endDateObj.getMonth()!=1) && (endDateObj.getMonth()!=2)) && (dto2.getYear()==(dto3.getYear()))) {
 		
 			if (dto2.getMonth()!=(dto3.getMonth()-1)) {
@@ -281,37 +281,26 @@ public class RewardPointsService {
 		}
 		
 		Map<Long, List<Map<String, Integer>>> result = new HashMap<>();
-		
-		
-		
+
 		List<Map<String, Integer>> pointsList = new ArrayList<>();
 		int totalPoints = 0;
 		for (NewPointsDTO dto : threeMonthsLst) {
-			
-			
 			Map<String, Integer> map = new HashMap<>();
 			String monthOfYear = Month.of(dto.getMonth()).getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH);
 			map.put(monthOfYear, dto.getPoints());
 			pointsList.add(map);
 			totalPoints+=dto.getPoints();
 		}
+		
 		Map<String, Integer> mapTotal = new HashMap<>();
 		mapTotal.put("Total", totalPoints);
 		pointsList.add(mapTotal);
-		
-		
-		
 		result.put(customerId, pointsList);
-
-
+		
 		return result;
-		
-		
 	}
 
-	
-	
-	
+
 	public List<NewPointsDTO> getDetailedRewardsNew(Long customerId) {
 		List<RewardPoint> lstByCustId = rewardPointRepository.getDetailedRewardsByCustId(customerId);
 
@@ -323,7 +312,6 @@ public class RewardPointsService {
 			boolean isYearPresent = containsYearNew(newLstDto,reward.getYear());
 			
 			if(isYearPresent) {
-				
 				 boolean isMonthPresent = containsMonthNew(newLstDto,reward.getMonth());
 				 if (isMonthPresent) {
 					 while(newItr.hasNext()) {
@@ -331,9 +319,7 @@ public class RewardPointsService {
 						 if (dto.getMonth()==reward.getMonth()) {
 							 dto.setPoints(dto.getPoints()+reward.getPoints());
 						}
-					 }
-					 
-					
+					 } 	
 				} else {
 					NewPointsDTO newPointsDTO = new NewPointsDTO();
 					newPointsDTO.setYear(reward.getYear());
@@ -341,8 +327,6 @@ public class RewardPointsService {
 					newPointsDTO.setPoints(reward.getPoints());
 					newLstDto.add(newPointsDTO);
 				}
-				 
-				
 			}
 			else {
 				NewPointsDTO newPointsDTO = new NewPointsDTO();
@@ -351,25 +335,10 @@ public class RewardPointsService {
 				newPointsDTO.setPoints(reward.getPoints());
 				newLstDto.add(newPointsDTO);
 			}
-			
-			
-			
-			
 		}
-		
-		
-		
-		
-		
-		
 		
 		return newLstDto;
 		
 	}
-	
-	
-	
-	
-	
 	
 }

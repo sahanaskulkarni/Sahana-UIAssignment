@@ -25,7 +25,7 @@ public class SecurityConfig {
 		            
 		            .requestMatchers("/transactions/delete","/transactions/update").hasAuthority("ADMIN")  
 
-		            .requestMatchers("/transactions/add","/transactions/getByCustomer","/rewardpoints/monthlyPoints")
+		            .requestMatchers("/transactions/add","/transactions/getByCustomer","/rewardpoints/customerRewardPoints")
 		            													.hasAnyAuthority("ADMIN","USER")
 		            
 		            .anyRequest().authenticated() )
