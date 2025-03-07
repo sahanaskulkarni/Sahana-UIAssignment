@@ -40,7 +40,7 @@ public class RewardPointsController {
 					@ApiResponse(description = "Unauthorized",responseCode = "403")
 				})
 	@GetMapping("/customerRewardPoints/{customerId}/{year}/{month}")
-	public  ResponseEntity<Map<Long, List<Map<String, Integer>>>> monthlyPoints(@PathVariable Long customerId,@PathVariable Long year,@PathVariable Long month) {
+	public  ResponseEntity<Map<Long, List<Map<String, Integer>>>> monthlyPoints(@PathVariable Long customerId,@PathVariable int year,@PathVariable int month) {
 		try {
 			Map<Long, List<Map<String, Integer>>> result = rewardpointsservice.getMonthlyRewards(customerId,year,month);
 			return new ResponseEntity<Map<Long, List<Map<String, Integer>>>>(result,HttpStatus.OK);
