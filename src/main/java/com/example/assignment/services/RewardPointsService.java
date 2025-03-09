@@ -199,89 +199,167 @@ public class RewardPointsService {
 		if (endDateObj!=null) {
 			
 			int indexOfEndDate = lstcustomers.indexOf(endDateObj);
-	
-			threeMonthsLst =  lstcustomers.subList((indexOfEndDate-2), indexOfEndDate+1);
-	
-			 List<NewPointsDTO> copiedList = new ArrayList<>();
-		        for (NewPointsDTO dto : threeMonthsLst) {
-		            copiedList.add(new NewPointsDTO(dto)); 
-		        }
 			
-	
-			NewPointsDTO dto1 = threeMonthsLst.get(0);
-			NewPointsDTO dto2 = threeMonthsLst.get(1);
-			NewPointsDTO dto3 = threeMonthsLst.get(2);
-			
-			// for enddate as february
-			if ((endDateObj.getMonth()==2) && (dto2.getYear()!=(dto3.getYear()))) {
-	
+			if ((indexOfEndDate!=0) && (indexOfEndDate!=1)) {
 				
-				if ((dto2.getMonth()!=(dto3.getMonth()-1)) ) {
-					dto2.setMonth(dto3.getMonth()-1);
-					dto2.setPoints(0);
-				}
-				
-				if (dto1.getMonth()!=12) {
-					NewPointsDTO newObjDto = copiedList.stream().filter(n->(n.getMonth()==(12)) &&
-																	(n.getYear()==(dto3.getYear()-1))).findFirst().orElse(null);
-					
-	
-					if (newObjDto!=null) {
-						dto1.setMonth(newObjDto.getMonth());
-						dto1.setPoints(newObjDto.getPoints());
-					} else {
-						dto1.setMonth(12);
-						dto1.setPoints(0);
-					}
-				
-				}
-			}
-			
-			// for enddate as january
-			if ((endDateObj.getMonth()==1) && (dto2.getYear()!=(dto3.getYear()))) {
-	
-				if ((dto2.getMonth()!=12) ) {
-					dto2.setMonth(12);
-					dto2.setPoints(0);
-				}
-				
-				if (dto1.getMonth()!=11) {
-					NewPointsDTO newObjDto = copiedList.stream().filter(n->(n.getMonth()==(11)) &&
-																	(n.getYear()==(dto3.getYear()-1))).findFirst().orElse(null);
-					
-					if (newObjDto!=null) {
-						dto1.setMonth(newObjDto.getMonth());
-						dto1.setPoints(newObjDto.getPoints());
-					} else {
-						dto1.setMonth(11);
-						dto1.setPoints(0);
-					}
-				}
-			}
-			
-			//for other months
-			if (((endDateObj.getMonth()!=1) && (endDateObj.getMonth()!=2)) && (dto2.getYear()==(dto3.getYear()))) {
-			
-				if (dto2.getMonth()!=(dto3.getMonth()-1)) {
-					dto2.setMonth(dto3.getMonth()-1);
-					dto2.setPoints(0);
-				}
-				
-				if (dto1.getMonth()!=(dto3.getMonth()-2)) {
-					NewPointsDTO newObjDto = copiedList.stream().filter(n->(n.getMonth()==(dto3.getMonth()-2)) &&
-																	(n.getYear()==(dto3.getYear()))).findFirst().orElse(null);
+				threeMonthsLst =  lstcustomers.subList((indexOfEndDate-2), indexOfEndDate+1);
 		
-					if (newObjDto!=null) {
-						dto1.setMonth(newObjDto.getMonth());
-						dto1.setPoints(newObjDto.getPoints());
-					} else {
-						dto1.setMonth(dto3.getMonth()-2);
-						dto1.setPoints(0);
+				 List<NewPointsDTO> copiedList = new ArrayList<>();
+			        for (NewPointsDTO dto : threeMonthsLst) {
+			            copiedList.add(new NewPointsDTO(dto)); 
+			        }
+				
+				NewPointsDTO dto1 = threeMonthsLst.get(0);
+				NewPointsDTO dto2 = threeMonthsLst.get(1);
+				NewPointsDTO dto3 = threeMonthsLst.get(2);
+				
+				// for enddate as february
+				if ((endDateObj.getMonth()==2) && (dto2.getYear()!=(dto3.getYear()))) {
+		
+					
+					if ((dto2.getMonth()!=(dto3.getMonth()-1)) ) {
+						dto2.setMonth(dto3.getMonth()-1);
+						dto2.setPoints(0);
 					}
 					
+					if (dto1.getMonth()!=12) {
+						NewPointsDTO newObjDto = copiedList.stream().filter(n->(n.getMonth()==(12)) &&
+																		(n.getYear()==(dto3.getYear()-1))).findFirst().orElse(null);
+						
+		
+						if (newObjDto!=null) {
+							dto1.setMonth(newObjDto.getMonth());
+							dto1.setPoints(newObjDto.getPoints());
+						} else {
+							dto1.setMonth(12);
+							dto1.setPoints(0);
+						}
+					
+					}
 				}
+				
+				// for enddate as january
+				if ((endDateObj.getMonth()==1) && (dto2.getYear()!=(dto3.getYear()))) {
+		
+					if ((dto2.getMonth()!=12) ) {
+						dto2.setMonth(12);
+						dto2.setPoints(0);
+					}
+					
+					if (dto1.getMonth()!=11) {
+						NewPointsDTO newObjDto = copiedList.stream().filter(n->(n.getMonth()==(11)) &&
+																		(n.getYear()==(dto3.getYear()-1))).findFirst().orElse(null);
+						
+						if (newObjDto!=null) {
+							dto1.setMonth(newObjDto.getMonth());
+							dto1.setPoints(newObjDto.getPoints());
+						} else {
+							dto1.setMonth(11);
+							dto1.setPoints(0);
+						}
+					}
+				}
+				
+				//for other months
+				if (((endDateObj.getMonth()!=1) && (endDateObj.getMonth()!=2)) && (dto2.getYear()==(dto3.getYear()))) {
+				
+					if (dto2.getMonth()!=(dto3.getMonth()-1)) {
+						dto2.setMonth(dto3.getMonth()-1);
+						dto2.setPoints(0);
+					}
+					
+					if (dto1.getMonth()!=(dto3.getMonth()-2)) {
+						NewPointsDTO newObjDto = copiedList.stream().filter(n->(n.getMonth()==(dto3.getMonth()-2)) &&
+																		(n.getYear()==(dto3.getYear()))).findFirst().orElse(null);
+			
+						if (newObjDto!=null) {
+							dto1.setMonth(newObjDto.getMonth());
+							dto1.setPoints(newObjDto.getPoints());
+						} else {
+							dto1.setMonth(dto3.getMonth()-2);
+							dto1.setPoints(0);
+						}
+						
+					}
+				}
+			} else {
+				if((endDateObj.getMonth()!=1) || (endDateObj.getMonth()!=2)) {
+					threeMonthsLst.add(endDateObj);
+					NewPointsDTO obj2 = lstcustomers.stream().filter((ele->(ele.getYear()==year) && ele.getMonth()==(month-1))).findFirst().orElse(null);
+					if (obj2!=null) {
+						threeMonthsLst.add(obj2);
+					} else {
+						NewPointsDTO newPointsDTO2 = new NewPointsDTO();
+						newPointsDTO2.setYear(year);
+						newPointsDTO2.setMonth(month-1);
+						newPointsDTO2.setPoints(0);
+						threeMonthsLst.add(newPointsDTO2);
+					}
+					NewPointsDTO obj3 = lstcustomers.stream().filter((ele->(ele.getYear()==year) && ele.getMonth()==(month-2))).findFirst().orElse(null);
+					if (obj3!=null) {
+						threeMonthsLst.add(obj3);
+					} else {
+						NewPointsDTO newPointsDTO3 = new NewPointsDTO();
+						newPointsDTO3.setYear(year);
+						newPointsDTO3.setMonth(month-2);
+						newPointsDTO3.setPoints(0);
+						threeMonthsLst.add(newPointsDTO3);
+					}	
+					
+				}
+				else {
+					if (month==2) {
+						NewPointsDTO obj2 = lstcustomers.stream().filter((ele->(ele.getYear()==year) && ele.getMonth()==(month-1))).findFirst().orElse(null);
+						if (obj2!=null) {
+							threeMonthsLst.add(obj2);
+						} else {
+							NewPointsDTO newPointsDTO2 = new NewPointsDTO();
+							newPointsDTO2.setYear(year);
+							newPointsDTO2.setMonth(month-1);
+							newPointsDTO2.setPoints(0);
+							threeMonthsLst.add(newPointsDTO2);
+						}
+						NewPointsDTO obj3 = lstcustomers.stream().filter((ele->(ele.getYear()==(year-1)) && ele.getMonth()==12)).findFirst().orElse(null);
+						if (obj3!=null) {
+							threeMonthsLst.add(obj3);
+						} else {
+							NewPointsDTO newPointsDTO3 = new NewPointsDTO();
+							newPointsDTO3.setYear(year-1);
+							newPointsDTO3.setMonth(12);
+							newPointsDTO3.setPoints(0);
+							threeMonthsLst.add(newPointsDTO3);
+						}	
+					} 
+								
+					if (month==1) {
+						NewPointsDTO obj2 = lstcustomers.stream().filter((ele->(ele.getYear()==(year-1)) && ele.getMonth()==12)).findFirst().orElse(null);
+						if (obj2!=null) {
+							threeMonthsLst.add(obj2);
+						} else {
+							NewPointsDTO newPointsDTO2 = new NewPointsDTO();
+							newPointsDTO2.setYear(year-1);
+							newPointsDTO2.setMonth(12);
+							newPointsDTO2.setPoints(0);
+							threeMonthsLst.add(newPointsDTO2);
+						}
+						NewPointsDTO obj3 = lstcustomers.stream().filter((ele->(ele.getYear()==(year-1)) && ele.getMonth()==11)).findFirst().orElse(null);
+						if (obj3!=null) {
+							threeMonthsLst.add(obj3);
+						} else {
+							NewPointsDTO newPointsDTO3 = new NewPointsDTO();
+							newPointsDTO3.setYear(year-1);
+							newPointsDTO3.setMonth(11);
+							newPointsDTO3.setPoints(0);
+							threeMonthsLst.add(newPointsDTO3);
+						}
+					} 
+				}
+				
+				
+				
 			}
 		} 
+			
 		else {
 			NewPointsDTO newPointsDTO1 = new NewPointsDTO();
 			newPointsDTO1.setYear(year);
